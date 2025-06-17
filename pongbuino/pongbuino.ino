@@ -1,11 +1,7 @@
 #include <Gamebuino-Meta.h>
+#include "Ball.h"
 
-int xPosition = 32;
-int yPosition = 32;
-int xSpeed = 1;
-int ySpeed = 1;
-int ballWidth = 4;
-int ballHeight = 4;
+Ball ball = Ball(4, 4);
 
 void setup() {
   gb.begin();
@@ -17,16 +13,16 @@ void loop() {
     gb.display.clear();
   }
 
-  if (xPosition >= gb.display.width() - ballWidth || xPosition <= 0) {
-    xSpeed = -xSpeed;
+  if (ball.getXPosition() >= gb.display.width() - ball.getWidth() || ball.getXPosition() <= 0) {
+    ball.xBounce();
   }
 
-  if (yPosition >= gb.display.height() - ballHeight || yPosition <= 0) {
-    ySpeed = -ySpeed;
+  if (ball.getYPosition() >= gb.display.height() - ball.getHeight() || ball.getYPosition() <= 0) {
+    ball.yBounce();
   }
 
-  xPosition = xPosition + xSpeed;
-  yPosition = yPosition + ySpeed;
+  ball.updateXPosition();
+  ball.updateYPosition();
 
-  gb.display.fillRect(xPosition, yPosition, ballHeight, ballWidth);
+  gb.display.fillRect(ball.getXPosition(), ball.getYPosition(), ball.getHeight(), ball.getWidth());
 }
